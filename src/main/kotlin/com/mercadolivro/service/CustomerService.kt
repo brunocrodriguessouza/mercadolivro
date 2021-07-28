@@ -1,46 +1,40 @@
 package com.mercadolivro.service
 
-import com.mercadolivro.controller.request.PostCustomerRequest
-import com.mercadolivro.controller.request.PutCustomerRequest
 import com.mercadolivro.model.CustomerModel
+import com.mercadolivro.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService {
+class CustomerService(
+    val customerRepository: CustomerRepository
+) {
 
-    val customers = mutableListOf<CustomerModel>()
-
-    fun listAll(name: String?): List<CustomerModel> {
-        name?.let {
-            return customers.filter { it.name.contains(name, true)}
-        }
-        return customers
+    fun create(customer: CustomerModel) {
+        customerRepository.save(customer)
     }
 
-    fun listById(id: String): CustomerModel {
-        return customers.filter { it.id == id }.first()
+    fun readAll(name: String?): List<CustomerModel> {
+        name?.let {
+            return customerRepository.findByNameContainingIgnoreCase(it)
+        }
+        return customerRepository.findAll().toList()
+    }
+
+    fun readById(id: Int): CustomerModel {
+        return customerRepository.findById(id).orElseThrow()
     }
 
     fun update(customer: CustomerModel) {
-        customers.filter { it.id == customer.id }.first().let {
-            it.name = customer.name
-            it.email = customer.email
+        if(!customerRepository.existsById(customer.id!!)){
+            throw Exception()
         }
+        customerRepository.save(customer)
     }
 
-    fun delete(id: String) {
-        customers.removeIf { it.id == id }
-    }
-
-    fun create(customer: CustomerModel) {
-        val id = if(customers.isEmpty()) {
-            1
-        } else {
-            customers.last().id!!.toInt() + 1
-        }.toString()
-
-        customer.id = id
-
-        customers.add(customer)
+    fun delete(id: Int) {
+        if(!customerRepository.existsById(id)){
+            throw Exception()
+        }
+        customerRepository.deleteById(id)
     }
 }

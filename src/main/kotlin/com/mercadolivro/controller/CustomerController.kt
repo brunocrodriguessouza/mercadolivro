@@ -14,31 +14,31 @@ class CustomerController(
     val customerService: CustomerService
 ) {
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun create(@RequestBody customer: PostCustomerRequest) {
+        customerService.create(customer.toCustomerModel())
+    }
+
     @GetMapping
-    fun listAll(@RequestParam name: String?): List<CustomerModel> {
-        return customerService.listAll(name)
+    fun readAll(@RequestParam name: String?): List<CustomerModel> {
+        return customerService.readAll(name)
     }
 
     @GetMapping("/{id}")
-    fun listById(@PathVariable id: String): CustomerModel {
-        return customerService.listById(id)
+    fun readById(@PathVariable id: Int): CustomerModel {
+        return customerService.readById(id)
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: String, @RequestBody customer: PutCustomerRequest) {
+    fun update(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest) {
         customerService.update(customer.toCustomerModel(id))
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: String) {
+    fun delete(@PathVariable id: Int) {
         customerService.delete(id)
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody customer: PostCustomerRequest) {
-        customerService.create(customer.toCustomerModel())
     }
 }
