@@ -10,9 +10,13 @@ data class CustomerModel(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
 
-    @Column(name="name", length=100, nullable=false)
+    @Column
     var name: String,
 
-    @Column(name="email", length=100, nullable=false)
-    var email: String
+    @Column
+    var email: String,
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    var status: CustomerStatus
 )
