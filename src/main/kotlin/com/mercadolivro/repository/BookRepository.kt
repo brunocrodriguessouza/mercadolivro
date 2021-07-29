@@ -1,7 +1,7 @@
 package com.mercadolivro.repository
 
 import com.mercadolivro.model.BookModel
-import com.mercadolivro.model.BookStatus
+import com.mercadolivro.enums.BookStatus
 import com.mercadolivro.model.CustomerModel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

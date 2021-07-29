@@ -1,5 +1,6 @@
 package com.mercadolivro.model
 
+import com.mercadolivro.enums.CustomerStatus
 import javax.persistence.*
 
 @Entity
