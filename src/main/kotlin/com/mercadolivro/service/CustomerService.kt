@@ -3,6 +3,8 @@ package com.mercadolivro.service
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.model.CustomerStatus
 import com.mercadolivro.repository.CustomerRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,11 +17,11 @@ class CustomerService(
         customerRepository.save(customer)
     }
 
-    fun readAll(name: String?): List<CustomerModel> {
+    fun readAll(name: String?, pageable: Pageable): Page<CustomerModel> {
         name?.let {
-            return customerRepository.findByNameContainingIgnoreCase(it)
+            return customerRepository.findByNameContainingIgnoreCase(it, pageable)
         }
-        return customerRepository.findAll().toList()
+        return customerRepository.findAll(pageable)
     }
 
     fun readById(id: Int): CustomerModel {

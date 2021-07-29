@@ -17,7 +17,7 @@ class BookService (
         bookRepository.save(book)
     }
 
-    fun findAll(pageable: org.springframework.data.domain.Pageable): Page<BookModel> {
+    fun findAll(pageable: Pageable): Page<BookModel> {
         return bookRepository.findAll(pageable)
     }
 
