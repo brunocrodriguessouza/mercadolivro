@@ -12,10 +12,10 @@ data class CustomerModel(
     var id: Int? = null,
 
     @Column
-    var name: String,
+    var name: String?,
 
     @Column
-    var email: String,
+    var email: String?,
 
     @Column
     @Enumerated(EnumType.STRING)
