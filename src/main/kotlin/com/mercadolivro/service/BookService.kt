@@ -47,4 +47,8 @@ class BookService (
             book.status = BookStatus.DELETADO
         }
     }
+
+    fun readAllById(bookIds: Set<Int>): List<BookModel> {
+        return bookRepository.findAllById((bookIds).toList())
+    }
 }
